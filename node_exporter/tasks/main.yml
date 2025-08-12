@@ -1,2 +1,21 @@
 ---
 # tasks file for node_exporter
+- name: Create Ansible remote temporary directory
+  become: yes
+  file:
+    path: "{{ ansible_remote_tmp_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "{{ ansible_remote_tmp_mode }}"
+
+- name: get tar source from url
+  get_url:
+    src: https://github.com/prometheus/node_exporter/releases/download/v1.9.1/node_exporter-1.9.1.linux-amd64.tar.gz
+    dest: "{{ ansible_remote_tmp_dir }}"
+
+- name: Extract tar
+  unarchive:
+    src:  "{{ ansible_remote_tmp_dir }}/node_exporter-1.9.1.linux-amd64.tar.gz"
+    dest: "/opt"
+    remote_src: yes

@@ -1,2 +1,5 @@
 ---
 # vars file for node_exporter
+prj_dir: /home/ansible/NODE_EXPORTER
+ansible_remote_tmp_dir: "{{ prj_dir }}/tmp"
+ansible_remote_tmp_mode: "1777"
